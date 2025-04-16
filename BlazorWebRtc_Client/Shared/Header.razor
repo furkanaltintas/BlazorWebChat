@@ -1,0 +1,78 @@
+﻿@using BlazorWebRtc_Client.Models.Request
+@using BlazorWebRtc_Client.Services.Abstract
+@using Microsoft.AspNetCore.Components.Authorization
+@inject IAccountService accountService
+@inject NavigationManager navigationManager
+@inject IRequestService requestService
+@inject IUserInfoService userInfoService
+
+<header>
+    <nav>
+        <ul>
+            <li><a href="">Home</a></li>
+            <li><a @onclick="OpenModal">Notifications(@requestCount)</a></li>
+            <AuthorizeView>
+                <Authorized>
+                    <li><a href="/friends">Friends</a></li>
+                    <li><a href=""> @context.User.Identity!.Name </a></li>
+                    <li><a @onclick="Logout">Logout</a></li>
+                </Authorized>
+                <NotAuthorized>
+                    <li><a href="Login">Login</a></li>
+                    <li><a href="Register">Register</a></li>
+                </NotAuthorized>
+            </AuthorizeView>
+
+
+        </ul>
+    </nav>
+</header>
+
+<BaseModal IsOpen="@IsModelOpen" IsOpenChanged="@((value) => IsModelOpen = value)" Requests="@Requests" RefreshRequestList="@OnInitializedAsync" />
+
+<style>
+    header {
+    background-color: #26918a;
+    padding: 0.3rem;
+    text-align: center;
+    }
+    nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    }
+    nav ul li a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.1rem;
+    }
+    a {
+    cursor: pointer;
+    }
+</style>
+
+@code {
+    private Int32 requestCount = 0;
+    public Boolean IsModelOpen = false;
+    private List<GetRequestFriendshipList> Requests = new();
+
+    private async Task OpenModal()
+    {
+        Requests = await requestService.GetFriendshipRequest();
+        IsModelOpen = true;
+    }
+
+    private async Task Logout()
+    {
+        await accountService.Logout();
+        await OnInitializedAsync();
+        navigationManager.NavigateTo("/");
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var result = await requestService.GetFriendshipRequest();
+        requestCount = result.Count;
+    }
+}
