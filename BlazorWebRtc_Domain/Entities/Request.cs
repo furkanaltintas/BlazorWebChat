@@ -9,6 +9,6 @@ public class Request : BaseEntity
     public Guid ReceiverUserId { get; set; }
     public StatusEnum Status { get; set; } = StatusEnum.Pending;
 
-    public User SenderUser { get; set; }
-    public User ReceiverUser { get; set; }
+    public User? SenderUser { get; set; }
+    public User? ReceiverUser { get; set; }
 }

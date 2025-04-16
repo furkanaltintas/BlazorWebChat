@@ -8,7 +8,5 @@ public class User : BaseEntity
     public string PasswordHash { get; set; } = string.Empty;
     public string PasswordSalt { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
-    public string Profile { get; set; } = string.Empty;
-
-    public virtual List<UserFriend> Friends { get; set; } = new List<UserFriend>();
+    public string? Profile { get; set; } = string.Empty;
 }

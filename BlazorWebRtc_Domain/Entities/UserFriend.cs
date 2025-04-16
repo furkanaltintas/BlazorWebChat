@@ -4,5 +4,17 @@ namespace BlazorWebRtc_Domain.Entities;
 
 public class UserFriend : BaseEntity
 {
-    public virtual List<User> Users { get; set; } = new List<User>();
+    public Guid RequesterId { get; set; }
+    public Guid ReceiverUserId { get; set; }
+
+    public User? Requester { get; set; }
+    public User? ReceiverUser { get; set; }
+
+    public UserFriend() { }
+
+    public UserFriend(Guid requesterId, Guid receiverId)
+    {
+        RequesterId = requesterId;
+        ReceiverUserId = receiverId;
+    }
 }

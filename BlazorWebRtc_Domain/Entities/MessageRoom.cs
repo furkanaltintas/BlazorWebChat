@@ -6,8 +6,8 @@ public class MessageRoom : BaseEntity
 {
     public Guid? SenderUserId { get; set; }
     public Guid ReceiverUserId { get; set; }
+    public string MessageContent { get; set; } = string.Empty;
 
-    public User SenderUser { get; set; }
-    public User ReceiverUser { get; set; }
-    public virtual List<Message> Messages { get; set; } = new List<Message>();
+    public User? SenderUser { get; set; }
+    public User? ReceiverUser { get; set; }
 }
