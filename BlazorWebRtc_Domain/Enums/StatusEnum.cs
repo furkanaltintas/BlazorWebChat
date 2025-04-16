@@ -2,7 +2,7 @@
 
 public enum StatusEnum
 {
-    Pending,
-    Accept,
-    Denied
+    Pending, // Bekliyor
+    Accept, // Kabul Edildi
+    Denied // Reddedildi
 }
