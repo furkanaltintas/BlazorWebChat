@@ -25,10 +25,15 @@ public class ConnectionManager : IConnectionManager
 
     public List<string> GetConnectionByUserId(List<string> userIds)
     {
-        var connections = new List<string>();
-        foreach (var userId in userIds)
-            if (_userConnections.TryGetValue(userId, out var userConnections)) connections.AddRange(userConnections);
-        return connections;
+        //var connections = new List<string>();
+        //foreach (var userId in userIds)
+        //    if (_userConnections.TryGetValue(userId, out var userConnections)) connections.AddRange(userConnections);
+        //return connections;
+
+        return userIds
+            .Where(userId => _userConnections.TryGetValue(userId, out _))
+            .SelectMany(userId => _userConnections[userId])
+            .ToList();
     }
 
     public string GetConnectionByUserIdSingleObj(string userId)

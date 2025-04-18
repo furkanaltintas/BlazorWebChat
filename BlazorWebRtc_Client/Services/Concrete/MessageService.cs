@@ -4,7 +4,6 @@ using BlazorWebRtc_Client.Models.Response;
 using BlazorWebRtc_Client.Services.Abstract;
 using Microsoft.AspNetCore.Components.Authorization;
 using Newtonsoft.Json;
-using System.Security.Claims;
 using System.Text;
 
 namespace BlazorWebRtc_Client.Services.Concrete

@@ -464,7 +464,6 @@
 
             StateHasChanged();
         });
-
     }
 
     protected void StartVideoCall()
@@ -526,6 +525,16 @@
 
         MessageContent = String.Empty;
         if (result) await OpenMessageModal(SelectedUserId);
+
+        hubConnection.On<String, Boolean>("ReceiveMessage", async (MessagesContent) =>
+        {
+            UserDTOs = await userFriendService.GetAllFriendsByUser();
+
+            var desObj = JsonConvert.DeserializeObject<List<MessageListResponseModel>>(MessagesContent);
+            MessageListResponseModels = desObj;
+
+            StateHasChanged();
+        });
     }
 
     private string GetProfilePicture(string profilePicturePath) => $"https://localhost:7090/{profilePicturePath}";

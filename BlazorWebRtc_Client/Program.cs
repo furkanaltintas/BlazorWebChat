@@ -32,7 +32,7 @@ builder.Services.AddScoped<AuthenticationStateProvider, CustomStateProvider>();
 builder.Services.AddScoped(st =>
 {
     var hubConnection = new HubConnectionBuilder()
-    .WithUrl("https://localhost:7090/userhub", options =>
+    .WithUrl("https://192.168.1.108:7090/userhub", options =>
         {
             options.Transports = HttpTransportType.WebSockets | HttpTransportType.LongPolling;
         })
@@ -41,6 +41,6 @@ builder.Services.AddScoped(st =>
     return hubConnection;
 });
 
-builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://localhost:7090/") });
+builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri("https://192.168.1.108:7090/") });
 
 await builder.Build().RunAsync();

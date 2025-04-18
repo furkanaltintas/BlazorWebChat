@@ -1,8 +1,10 @@
 ﻿using BlazorWebRtc_Application.Dtos;
+using BlazorWebRtc_Application.Hubs;
 using BlazorWebRtc_Application.Models;
 using BlazorWebRtc_Persistence.Context;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.SignalR;
 using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
@@ -11,11 +13,13 @@ namespace BlazorWebRtc_Application.Features.Queries.Messages.GetAll;
 class GetAllMessagesHandler : IRequestHandler<GetAllMessagesQuery, ResponseModel>
 {
     private readonly IHttpContextAccessor _httpContextAccessor;
+    private readonly IHubContext<UserHub> _hubContext;
     private readonly AppDbContext _context;
 
-    public GetAllMessagesHandler(IHttpContextAccessor httpContextAccessor, AppDbContext context)
+    public GetAllMessagesHandler(IHttpContextAccessor httpContextAccessor, IHubContext<UserHub> hubContext, AppDbContext context)
     {
         _httpContextAccessor = httpContextAccessor;
+        _hubContext = hubContext;
         _context = context;
     }
 
